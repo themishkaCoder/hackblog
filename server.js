@@ -6,9 +6,9 @@ const server = require("http").createServer(app);
 
 const io = require("socket.io").listen(server);
 
+var port = process.env.PORT || 3000;
 
-
-server.listen(8080);
+server.listen(port);
 //server.listen(process.env.PORT);
 
 // mongoose.connect(keys.mongoURI)
