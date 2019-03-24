@@ -47,7 +47,7 @@
             <form action="" id="sendForm">
                 <div class="chat">
                     <!-- <textarea name="" cols="30" rows="10" id="allMess"></textarea> -->
-                    <div class="messListClass">
+                    <div class="messListClass" id="scrollView">
                         <ul id="messList">
 
                         </ul>
@@ -59,7 +59,30 @@
             </form>
         </div>
 
+        <div class="adminPanel">
 
+            <div class="loginToAdmin">
+                <form action="" id="loginToAdmin">
+                    <input type="text" placeholder="login" id="loginInput">
+                    <input type="password" placeholder="password" id="passInput">
+                    <button id="loginButton">Login</button>
+                </form>
+            </div>
+
+            <div class="hideShow" id="hideShow"> 
+                    <h2>Admin Panel</h2>
+                    <form action="" id="banUser">
+                        <input type="text" placeholder="Введите ip для бана" id="banIp">
+                        <button type="submit">Ban!</button>
+                    </form>
+        
+                    <form action="" id="pardonUser">
+                        <input type="text" placeholder="Введите ip для разбана">
+                        <button type="submit" id="pardonIp">Pardon( ͡° ͜ʖ ͡°)</button>
+                    </form>
+            </div>
+            
+        </div>
 
         <div class="sidebar">
             <h2>Онлайн:</h2>
@@ -84,14 +107,37 @@
             var $sendForm = $("#sendForm");
             var $messInput = $("#messInput");
             var $userN = $("#userName");
+            var loginInput = $("#loginInput").val();
+            var passInput = $("#passInput").val();
             //var $allMess = $("#allMess");
             var testM = document.getElementById("test");
+            $("#hideShow").hide();
+            
+            $("#loginToAdmin").submit(function(e){
+                e.preventDefault();
+                if($("#loginInput").val() == "admin" && $("#passInput").val() == "Sobaka@14stsahara"){
+                    
+                    $("#hideShow").show();
+                    
+                }
+            });
+
+            $("#banUser").submit(function(event){
+                event.preventDefault();
+                socket.emit("banUser", $("#banIp").val());
+                console.log("Success!");
+            });
 
             $sendForm.submit((event) => {
                 event.preventDefault();
                 socket.emit("sendMess", $messInput.val(), $userN.val());
                 $messInput.val("");
             });
+
+            socket.on("answer", ()=>{
+                $("#messList").append("<li>Banned</li>");
+                socket.disconnect(true);
+            })
 
             socket.on("addMess", (data) => {
                 //$allMess.text = data.msg;
@@ -107,34 +153,8 @@
 
                 if (data.user == "Admin"){
 
-                    // if(link.test(data.msg)){
-                    //     //console.log("link detected");
-                    //     if (data.user == "Admin"){
-                    //         $("#messList").append("<li>" + "<span class='user'>" + "<i class='fas fa-crown user'></i> " +  data.user + "</span>" + ": "+ "<a href = '" + data.msg + "'>" + data.msg + "</a>" + "</li>");
-                    //     }else if(data.user !== "Admin"){
-                    //         //console.log("link is not detected");
-                    //         // $("#messList").append("<li>" + "<span class='user'>" + data.user + "</span>" + ": " + data.msg + "</li>");
-                    //         $("#messList").append("<li>" + "<span class='user'>" +  data.user + "</span>" + ": "+ "<a href = '" + data.msg + "'>" + data.msg + "</a>" + "</li>");
-                    //     }else{
-                    //         $("#messList").append("<li>" + "<span class='user'>" +  data.user + "</span>" + ": "+ "<a href = '" + data.msg + "'>" + data.msg + "</a>" + "</li>");
-                    //     }
-                        
-                        // else{
-                        //     console.log("link is not detected");
-                        //     $("#messList").append("<li>" + "<span class='user'>" + "<i class='fas fa-crown user'></i> " +  data.user + "</span>" + ": " + data.msg + "</li>");
-                        // }
-
-                        // }else if(data.user !== "Admin"){
-                        //     console.log("link is not detected");
-                        //     $("#messList").append("<li>" + "<span class='user'>" + "<i class='fas fa-crown user'></i> " + data.user + "</span>" + ": " + data.msg + "</li>");
-                        // }
-
-                    // }else{
-                    //     console.log("link is not detected");
-                    //     $("#messList").append("<li>" + "<span class='user'>" + "<i class='fas fa-crown user'></i> " +  data.user + "</span>" + ": " + data.msg + "</li>");
-                    // }
-
                     $("#messList").append("<li>" + "<span class='user'>" + "<i class='fas fa-crown user'></i> " + data.user + "</span>" + ": " + data.msg + "</li>");
+                    
 
                 }else if(data.user == 0 || data.msg == 0){
                     data.preventDefault();
@@ -142,6 +162,10 @@
                     $("#messList").append("<li>" + "<span class='user'>" + data.user + "</span>" + ": " + data.msg + "</li>");
                 }
 
+                //$("#scrollView").scrollTop(9999);
+                $("#scrollView").animate({
+                    scrollTop: 9999
+                }, 1000);
                 // if(link.test(data.msg)){
                 //     //console.log("link detected");
                 //     if (data.user == "Admin"){

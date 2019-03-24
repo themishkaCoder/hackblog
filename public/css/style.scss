@@ -55,7 +55,31 @@ article{
     padding: 2rem 4rem;
     margin: 1rem auto;
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 3fr 2fr 1fr;
+    .adminPanel{
+        padding-top: 2rem;
+        form{
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            justify-items: start; 
+            align-items: start;
+            input{
+                border: none;
+                background-color: #2E2E2E;
+                padding: 10px 15px;
+                color: #2EE400;
+                margin: 10px 0;
+                width: 300px;
+            }
+            button{
+                border: none;
+                background-color: #2E2E2E;
+                padding: 10px 15px;
+                color: #2EE400;
+                width: 330px;
+            }
+        }
+    }
     .sidebar{
         background-color: grey;
         // margin-left: 30px;

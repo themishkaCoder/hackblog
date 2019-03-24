@@ -56,3 +56,15 @@ for(var i = 0; i < mainLink.length; i++){
 // var $allMess = $("#allMess");
 
 // $allMess.val("test");
+
+// var loginInput = $("#loginInput").val();
+// var passInput = $("#passInput").val();
+
+// $("#hideShow").hide();
+            
+//     $("#loginButton").click(function(e){
+//         e.preventDefault();
+//         if($("#loginInput").val() == "admin" && $("#passInput").val() == "qwerty"){
+//             $("#hideShow").show();
+//         }
+// });

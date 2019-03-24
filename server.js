@@ -8,7 +8,7 @@ const io = require("socket.io").listen(server);
 
 
 
-server.listen(3000, "192.168.88.200");
+server.listen(3000);
 
 mongoose.connect(keys.mongoURI)
     .then(() => console.log("MongoDB connected."))
@@ -44,7 +44,12 @@ io.sockets.on("connection", (socket) => {
     var clientId = socket.id;
     console.log("Новый пользователь подключен " + clientIp + " : " + clientId);
     //console.log(socket.id);
-    connections.push(socket);
+    connections.push(clientIp);
+    console.log(connections);
+    // if(clientIp == "192.168.88.31"){
+    //     socket.disconnect(true);
+    //     console.log("You banned! " + clientIp);
+    // }
     
 
     socket.on("disconnect", (data) => {
@@ -54,7 +59,32 @@ io.sockets.on("connection", (socket) => {
 
     socket.on("sendMess", (data, name) => {
         io.sockets.emit("addMess", {msg: data, user: name});
-        console.log(clientId + " : " + name + ": " + data);
+        console.log(clientId + " # " + clientIp +" : " + name + ": " + data);
+    });
+
+    socket.on("banUser", (data) => {
+        var banIp = {
+            ip: data
+        };
+        //banIp.ip.disconnect(true);
+        for(var itemIp of connections){
+            if(itemIp == banIp.ip){
+                //socket.disconnect(true);
+                io.sockets.emit("answer");
+                console.log("You banned! : " + banIp.ip);
+                // io.sockets.emit("disconnect");
+            }
+        }
+        //socket.disconnect(true);
+        // console.log("You banned! : " + banIp.ip);
+        // io.sockets.emit("disconnect");
+        // io.sockets.emit("answer");
+
+        // if(clientIp == banIp.ip){
+        //         sockets.disconnect(true);
+        //         console.log("You banned! : " + banIp.ip);
+        //         io.sockets.emit("answer");
+        //     }
     });
 
     socket.on("sendLoginForm", (login, pass) => {
