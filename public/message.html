@@ -55,6 +55,7 @@
                     <input type="text" id="userName" placeholder="Name">
                     <input type="text" placeholder="Сообщение..." id="messInput">
                     <button type="submit">Отправить</button>
+                    <audio src="sounds/newMess.mp3" autoplay = "autoplay" id="messSound"></audio>
                 </div>
             </form>
         </div>
@@ -166,6 +167,11 @@
                 $("#scrollView").animate({
                     scrollTop: 9999
                 }, 1000);
+
+
+                var audio = new Audio('sounds/pdaSms.mp3');
+                audio.play();
+                // $("#messSound").play();
                 // if(link.test(data.msg)){
                 //     //console.log("link detected");
                 //     if (data.user == "Admin"){
