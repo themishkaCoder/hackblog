@@ -1,6 +1,6 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const keys = require("./keys");
+// const mongoose = require("mongoose");
+// const keys = require("./keys");
 const app = express();
 const server = require("http").createServer(app);
 
@@ -10,9 +10,9 @@ const io = require("socket.io").listen(server);
 
 server.listen(3000);
 
-mongoose.connect(keys.mongoURI)
-    .then(() => console.log("MongoDB connected."))
-    .catch(err => console.error(err))
+// mongoose.connect(keys.mongoURI)
+//     .then(() => console.log("MongoDB connected."))
+//     .catch(err => console.error(err))
 
 app.use(express.static('public'));
 
