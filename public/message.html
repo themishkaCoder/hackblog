@@ -46,13 +46,21 @@
             <h1 class="text-center">Чат</h1>
             <form action="" id="sendForm">
                 <div class="chat">
-                    <textarea name="" cols="30" rows="10" id="allMess"></textarea>
+                    <!-- <textarea name="" cols="30" rows="10" id="allMess"></textarea> -->
+                    <div class="messListClass">
+                        <ul id="messList">
+
+                        </ul>
+                    </div>
                     <input type="text" id="userName" placeholder="Name">
                     <input type="text" placeholder="Сообщение..." id="messInput">
                     <button type="submit">Отправить</button>
                 </div>
             </form>
         </div>
+
+
+
         <div class="sidebar">
             <h2>Онлайн:</h2>
             <ul id="onlineUserList">
@@ -61,6 +69,7 @@
         </div>
     </article>
 
+    
 
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script
@@ -89,8 +98,63 @@
                 //testM.innerText = data.msg;
                 //$("#allMess").append($("li").text(data.msg));
                 //$("#allMess").text(data.msg + "\n");
-                $("#allMess").val($("#allMess").val() + data.user + ": " + data.msg + "\n");
+                //$("#allMess").val($("#allMess").val() + data.user + ": " + data.msg + "\n");
+                // if (data.user == null || data.msg == null){
+                //     data.preventDefault();
+                // }
+                var link = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
 
+
+                if (data.user == "Admin"){
+
+                    // if(link.test(data.msg)){
+                    //     //console.log("link detected");
+                    //     if (data.user == "Admin"){
+                    //         $("#messList").append("<li>" + "<span class='user'>" + "<i class='fas fa-crown user'></i> " +  data.user + "</span>" + ": "+ "<a href = '" + data.msg + "'>" + data.msg + "</a>" + "</li>");
+                    //     }else if(data.user !== "Admin"){
+                    //         //console.log("link is not detected");
+                    //         // $("#messList").append("<li>" + "<span class='user'>" + data.user + "</span>" + ": " + data.msg + "</li>");
+                    //         $("#messList").append("<li>" + "<span class='user'>" +  data.user + "</span>" + ": "+ "<a href = '" + data.msg + "'>" + data.msg + "</a>" + "</li>");
+                    //     }else{
+                    //         $("#messList").append("<li>" + "<span class='user'>" +  data.user + "</span>" + ": "+ "<a href = '" + data.msg + "'>" + data.msg + "</a>" + "</li>");
+                    //     }
+                        
+                        // else{
+                        //     console.log("link is not detected");
+                        //     $("#messList").append("<li>" + "<span class='user'>" + "<i class='fas fa-crown user'></i> " +  data.user + "</span>" + ": " + data.msg + "</li>");
+                        // }
+
+                        // }else if(data.user !== "Admin"){
+                        //     console.log("link is not detected");
+                        //     $("#messList").append("<li>" + "<span class='user'>" + "<i class='fas fa-crown user'></i> " + data.user + "</span>" + ": " + data.msg + "</li>");
+                        // }
+
+                    // }else{
+                    //     console.log("link is not detected");
+                    //     $("#messList").append("<li>" + "<span class='user'>" + "<i class='fas fa-crown user'></i> " +  data.user + "</span>" + ": " + data.msg + "</li>");
+                    // }
+
+                    $("#messList").append("<li>" + "<span class='user'>" + "<i class='fas fa-crown user'></i> " + data.user + "</span>" + ": " + data.msg + "</li>");
+
+                }else if(data.user == 0 || data.msg == 0){
+                    data.preventDefault();
+                }else{
+                    $("#messList").append("<li>" + "<span class='user'>" + data.user + "</span>" + ": " + data.msg + "</li>");
+                }
+
+                // if(link.test(data.msg)){
+                //     //console.log("link detected");
+                //     if (data.user == "Admin"){
+                //     $("#messList").append("<li>" + "<span class='user'>" + "<i class='fas fa-crown user'></i> " +  data.user + "</span>" + ": "+ "<a href = '" + data.msg + "'>" + data.msg + "</a>" + "</li>");
+                // }
+                // }else{
+                //     console.log("link is not detected");
+                // }
+
+
+
+                //$("#messList").append("<li>" + "<span class='user'>" + data.user + "</span>" + ": " + data.msg + "</li>");
+                
             });
         });
 

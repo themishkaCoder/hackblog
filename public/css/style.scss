@@ -141,6 +141,30 @@ article{
         padding: 10px 15px;
         color: #2EE400;
     }
+    .messListClass{
+        width: 300px;
+        background-color: #2E2E2E;
+        height: 260px;
+        overflow-y: auto;
+        word-wrap: break-word;
+        // overflow-x: auto;
+        padding: 10px 15px;
+        
+        ul{
+            list-style-type: none;
+            //width: 280px;
+
+        }
+        li{
+            padding-top: 10px;
+            color: #2EE400;
+            //overflow: scroll;
+            // max-width: 280px;
+        }
+        .user{
+            color: yellow;
+        }
+    }
     input{
         border: none;
         background-color: #2E2E2E;

@@ -41,7 +41,9 @@ var connections = [];
 
 io.sockets.on("connection", (socket) => {
     var clientIp = socket.request.connection.remoteAddress;
-    console.log("Новый пользователь подключен " + clientIp);
+    var clientId = socket.id;
+    console.log("Новый пользователь подключен " + clientIp + " : " + clientId);
+    //console.log(socket.id);
     connections.push(socket);
     
 
@@ -52,7 +54,7 @@ io.sockets.on("connection", (socket) => {
 
     socket.on("sendMess", (data, name) => {
         io.sockets.emit("addMess", {msg: data, user: name});
-        console.log("mess: " + name + ": " + data);
+        console.log(clientId + " : " + name + ": " + data);
     });
 
     socket.on("sendLoginForm", (login, pass) => {
