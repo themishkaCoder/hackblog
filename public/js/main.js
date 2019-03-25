@@ -11,6 +11,7 @@ $("#exitMenu").click(function(){
 
 
 
+
 var links = {
     main: "Главная",
     mainHref: "/",

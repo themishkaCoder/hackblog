@@ -63,6 +63,11 @@ io.sockets.on("connection", (socket) => {
         console.log(clientId + " # " + clientIp +" : " + name + ": " + data);
     });
 
+    socket.on("printEvent", () => {
+        io.sockets.emit("printingSuccess");
+        
+    });
+
     socket.on("banUser", (data) => {
         var banIp = {
             ip: data

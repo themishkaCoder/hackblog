@@ -52,10 +52,12 @@
 
                         </ul>
                     </div>
+                    <p id="printing">Пользователь пишет сообщение</p>
                     <input type="text" id="userName" placeholder="Name">
                     <input type="text" placeholder="Сообщение..." id="messInput">
                     <button type="submit">Отправить</button>
                     <audio src="sounds/newMess.mp3" autoplay = "autoplay" id="messSound"></audio>
+                    <audio src="sounds/pdaSms.mp3" id="pdaSms"></audio>
                 </div>
             </form>
         </div>
@@ -113,10 +115,25 @@
             //var $allMess = $("#allMess");
             var testM = document.getElementById("test");
             $("#hideShow").hide();
+            $("#printing").hide();
+
+            $("#messInput").on("input", ()=>{
+                //$("#printing").show("slow");
+                socket.emit("printEvent");
+                console.log("printEvent send to server");
+            })
+
+            // $("#messInput").blur(()=>{
+            //     $("#printing").hide("slow");
+            // })
+
+            // $("#messInput").change(()=>{
+            //     $("#printing").hide("slow");
+            // })
             
             $("#loginToAdmin").submit(function(e){
                 e.preventDefault();
-                if($("#loginInput").val() == "admin" && $("#passInput").val() == "Sobaka@14stsahara"){
+                if($("#loginInput").val() == "admin" && $("#passInput").val() == "qwerty"){
                     
                     $("#hideShow").show();
                     
@@ -140,15 +157,19 @@
                 socket.disconnect(true);
             })
 
+            socket.on("printingSuccess", ()=>{
+                $("#printing").show("slow");
+
+                $("#messInput").blur(()=>{
+                    $("#printing").hide("slow");
+                });
+
+                $("#messInput").change(()=>{
+                    $("#printing").hide("slow");
+                });              
+            });
+
             socket.on("addMess", (data) => {
-                //$allMess.text = data.msg;
-                //testM.innerText = data.msg;
-                //$("#allMess").append($("li").text(data.msg));
-                //$("#allMess").text(data.msg + "\n");
-                //$("#allMess").val($("#allMess").val() + data.user + ": " + data.msg + "\n");
-                // if (data.user == null || data.msg == null){
-                //     data.preventDefault();
-                // }
                 var link = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
 
 
@@ -162,37 +183,19 @@
                 }else{
                     $("#messList").append("<li>" + "<span class='user'>" + data.user + "</span>" + ": " + data.msg + "</li>");
                 }
-
+                $("#printing").hide("slow");
                 //$("#scrollView").scrollTop(9999);
                 $("#scrollView").animate({
                     scrollTop: 9999
                 }, 1000);
 
-
+                //var pdaSms = document.getElementById("pdaSms")
                 var audio = new Audio('sounds/pdaSms.mp3');
                 audio.play();
-                // $("#messSound").play();
-                // if(link.test(data.msg)){
-                //     //console.log("link detected");
-                //     if (data.user == "Admin"){
-                //     $("#messList").append("<li>" + "<span class='user'>" + "<i class='fas fa-crown user'></i> " +  data.user + "</span>" + ": "+ "<a href = '" + data.msg + "'>" + data.msg + "</a>" + "</li>");
-                // }
-                // }else{
-                //     console.log("link is not detected");
-                // }
-
-
-
-                //$("#messList").append("<li>" + "<span class='user'>" + data.user + "</span>" + ": " + data.msg + "</li>");
-                
+                //pdaSms.play();
             });
         });
-
-        
-
     </script>
-
-
     <script>if (window.module) module = window.module;</script>
 </body>
 </html>
