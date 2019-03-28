@@ -21,10 +21,10 @@ var port = process.env.PORT || 3000;
 //   })
 // })
 
-//server.listen(port);
+server.listen(port);
 
 
-server.listen(3000, "192.168.88.200");
+//server.listen(3000, "192.168.88.200");
 
 
 // mongoose.connect(keys.mongoURI)
