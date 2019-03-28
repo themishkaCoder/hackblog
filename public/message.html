@@ -64,7 +64,7 @@
 
         <div class="adminPanel">
 
-            <div class="loginToAdmin">
+            <div class="loginToAdmin" id="loginToAdmin">
                 <form action="" id="loginToAdmin">
                     <input type="text" placeholder="login" id="loginInput">
                     <input type="password" placeholder="password" id="passInput">
@@ -83,6 +83,11 @@
                         <input type="text" placeholder="Введите ip для разбана">
                         <button type="submit" id="pardonIp">Pardon( ͡° ͜ʖ ͡°)</button>
                     </form>
+
+                    <h2>Connected ip:</h2>
+                    <ul id="connectedIpClient">
+
+                    </ul>
             </div>
             
         </div>
@@ -136,6 +141,7 @@
                 if($("#loginInput").val() == "admin" && $("#passInput").val() == "qwerty"){
                     
                     $("#hideShow").show();
+                    $("#loginToAdmin").hide();
                     
                 }
             });
@@ -153,9 +159,27 @@
             });
 
             socket.on("answer", ()=>{
-                $("#messList").append("<li>Banned</li>");
+                $("#messList").append("<li style = 'color: red;'><b>Страница перезагрузиться через 6 секунд</b> Некий пользователь был забанен, обновите страницу чтобы дальше пользоваться чатом</li>");
                 socket.disconnect(true);
-            })
+                setTimeout(()=>{
+                    window.location.reload();
+                }, 6000);
+            });
+
+            socket.on("newUser", (ip)=>{
+                $("#connectedIpClient").append("<li>" + ip + "</li>");
+                // // Edit ip always
+                // $("#connectedIpClient li:contains(192.168.88.200)").remove();
+                // //
+            });
+
+            socket.on("removeUser", (socketIp)=>{
+                // Edit ip always
+                $("#connectedIpClient li:contains(192.168.88.200)").remove();
+                //
+                $("#connectedIpClient li:contains(" + socketIp + ")").remove();
+
+            });
 
             socket.on("printingSuccess", ()=>{
                 $("#printing").show("slow");
